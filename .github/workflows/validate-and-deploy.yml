@@ -90,7 +90,7 @@ jobs:
   pre-change-validation:
     runs-on: self-hosted
     needs: ansible-dry-run
-    container: adealdag/ansible:beta
+    container: adealdag/ansible:latest
 
     steps:
       - uses: actions/checkout@v2
@@ -179,7 +179,7 @@ jobs:
   post-change-validation:
     runs-on: self-hosted
     needs: ansible-deploy
-    container: adealdag/ansible:beta
+    container: adealdag/ansible:latest
 
     steps:
       - uses: actions/checkout@v2
