@@ -12,9 +12,8 @@ epgs:
       - contract: any_to_log_con
         type: consumer
     domains:
-      - type: vmm
-        domain: vmm_vds_mlg
-        provider: vmware
+      - type: phys
+        domain: PHY-USER
   - name: hrms_be_epg
     bd: 192.168.22.0_24_bd
     prefGroup: no
@@ -28,9 +27,8 @@ epgs:
       - contract: any_to_log_con
         type: consumer
     domains:
-      - type: vmm
-        domain: vmm_vds_mlg
-        provider: vmware
+      - type: phys
+        domain: PHY-USER
   - name: db_epg
     bd: 192.168.23.0_24_bd
     prefGroup: no
@@ -40,9 +38,8 @@ epgs:
       - contract: any_to_log_con
         type: consumer
     domains:
-      - type: vmm
-        domain: vmm_vds_mlg
-        provider: vmware
+      - type: phys
+        domain: PHY-USER
   - name: db_cache_epg
     bd: 192.168.23.0_24_bd
     prefGroup: no
@@ -54,9 +51,8 @@ epgs:
       - contract: any_to_log_con
         type: consumer
     domains:
-      - type: vmm
-        domain: vmm_vds_mlg
-        provider: vmware
+      - type: phys
+        domain: PHY-USER
   - name: log_epg
     bd: 192.168.22.0_24_bd
     prefGroup: no
@@ -64,9 +60,8 @@ epgs:
       - contract: any_to_log_con
         type: provider
     domains:
-      - type: vmm
-        domain: vmm_vds_mlg
-        provider: vmware
+      - type: phys
+        domain: PHY-USER
   - name: auth_epg
     bd: 192.168.22.0_24_bd
     prefGroup: no
@@ -76,6 +71,5 @@ epgs:
       - contract: any_to_log_con
         type: consumer
     domains:
-      - type: vmm
-        domain: vmm_vds_mlg
-        provider: vmware
+      - type: phys
+        domain: PHY-USER
