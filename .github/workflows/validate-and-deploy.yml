@@ -57,14 +57,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run ansible playbook dry-run
-        env:
-          VAULT_KEY: ${{ secrets.VAULT_KEY }}
         run: |
           ansible --version
-          echo $VAULT_KEY > vault.key
-          ansible-playbook -i inventory.yaml --vault-password-file vault.key deploy.yaml --check
+          ansible-playbook -i inventory.yaml deploy.yaml --check
           ls -al
-          rm vault.key
         working-directory: playbooks
 
       - name: Upload artifact
@@ -102,14 +98,10 @@ jobs:
           path: tools/change-validation
 
       - name: Run pre-change analysis playbook
-        env:
-          VAULT_KEY: ${{ secrets.VAULT_KEY }}
         run: |
           ansible --version
           rm -rf $HOME/.ansible/pc
-          echo $VAULT_KEY > vault.key
-          ansible-playbook -i inventory.yaml --vault-password-file vault.key pre-change-validation.yaml
-          rm vault.key
+          ansible-playbook -i inventory.yaml pre-change-validation.yaml
         working-directory: tools/change-validation
 
       - name: Send Webex Notification
@@ -153,13 +145,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run ansible playbook
-        env:
-          VAULT_KEY: ${{ secrets.VAULT_KEY }}
         run: |
           ansible --version
           echo $VAULT_KEY > vault.key
-          ansible-playbook -i inventory.yaml --vault-password-file vault.key deploy.yaml
-          rm vault.key
+          ansible-playbook -i inventory.yaml deploy.yaml
         working-directory: playbooks
 
       - name: Send Webex Notification
@@ -185,14 +174,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run post-change analysis playbook
-        env:
-          VAULT_KEY: ${{ secrets.VAULT_KEY }}
         run: |
           ansible --version
           rm -rf $HOME/.ansible/pc
-          echo $VAULT_KEY > vault.key
-          ansible-playbook -i inventory.yaml --vault-password-file vault.key post-change-validation.yaml
-          rm vault.key
+          ansible-playbook -i inventory.yaml post-change-validation.yaml
         working-directory: tools/change-validation
 
       - name: Send Webex Notification
