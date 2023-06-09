@@ -2,9 +2,9 @@ dcmdr:
   children:
     apic:
       hosts:
-        apic1-mlg1.cisco.com:
+        10.50.16.250:
           ansible_host: 10.50.16.250
-          aci_username: "ansible"
+          aci_username: "admin"
           aci_password: !vault |
             $ANSIBLE_VAULT;1.1;AES256
             38313261363831666336663662323530323435323832373231393466653337333464646637653765
