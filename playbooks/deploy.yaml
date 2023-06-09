@@ -6,5 +6,5 @@
 - name: Deploy prod tenant, networking and contracts
   import_playbook: tn_prod_playbook.yaml
 
-- name: Deploy prod hrms app
-  import_playbook: hrms_app_playbook.yaml
+#- name: Deploy prod hrms app
+#  import_playbook: hrms_app_playbook.yaml
