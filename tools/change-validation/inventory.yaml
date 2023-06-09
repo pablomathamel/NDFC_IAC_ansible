@@ -2,7 +2,7 @@ dcmdr:
   children:
     nd:
       hosts:
-        vnd02-mdr1.cisco.com:
+        nd.swlab.bcn:
           ansible_host: 192.168.254.33
           ansible_user: admin
           ansible_ssh_pass: C1sc0123p
