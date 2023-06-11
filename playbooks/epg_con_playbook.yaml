@@ -19,58 +19,115 @@
       output_path: dryrun_data.json
 
   vars_files:
-    - ./hrms_app_vars.yaml
+    - ./epg_con_vars.yaml
 
   tasks:
-    - name: Add Application Profile
-      cisco.aci.aci_ap:
+    - name: Add Tenant
+      cisco.aci.aci_tenant:
         <<: *aci_login
         tenant: "{{ tenant_name }}"
-        ap: "{{ app_name }}"
 
-    - name: Add EPG
+    - name: Add BD {{ bd_name }}
+      cisco.aci.aci_bd:
+        <<: *aci_login
+        tenant: "{{ tenant_name }}"
+        bd: "{{ bd_name }}"
+        vrf: "{{ vrf_name }}"
+        l2_unknown_unicast: proxy
+        arp_flooding: yes
+        enable_routing: yes
+
+    - name: Add subnets
+      cisco.aci.aci_bd_subnet:
+        <<: *aci_login
+        tenant: "{{ tenant_name }}"
+        bd: "{{ bd_name }}"
+        gateway: 172.16.3.1
+        mask: 24
+        scope: private
+
+    - name: Add EPG "{{ epg_name }}"
       cisco.aci.aci_epg:
         <<: *aci_login
         tenant: "{{ tenant_name }}"
-        ap: "{{ app_name }}"
-        epg: "{{ item.name }}"
-        bd: "{{ item.bd }}"
-        preferred_group: "{{ item.prefGroup }}"
-      loop: "{{ epgs }}"
+        ap: "{{ ap_name }}"
+        epg: "{{ epg_name }}"
+        bd: "{{ bd_name }}"
 
-    - name: Add contracts
-      cisco.aci.aci_epg_to_contract:
-        <<: *aci_login
-        tenant: "{{ tenant_name }}"
-        ap: "{{ app_name }}"
-        epg: "{{ item.0.name }}"
-        contract: "{{ item.1.contract }}"
-        contract_type: "{{ item.1.type }}"
-
-      loop: "{{ epgs | subelements('contracts', skip_missing=True) }}"
-
-    - name: Add domain binding
+    - name: Add domain binding to "{{ epg_name }}"
       cisco.aci.aci_epg_to_domain:
         <<: *aci_login
         tenant: "{{ tenant_name }}"
-        ap: "{{ app_name }}"
-        epg: "{{ item.0.name }}"
-        domain: "{{ item.1.domain }}"
-        domain_type: "{{ item.1.type }}"
-        vm_provider: "{{ item.1.provider | default(omit) }}"
-      loop: "{{ epgs | subelements('domains', skip_missing=True) }}"
+        ap: "{{ ap_name }}"
+        epg: "{{ epg_name }}"
+        domain: PHY-USER
+        domain_type: phys
 
-    - name: Deploy Static Path binding
-      cisco.aci.aci_static_binding_to_epg:
+    - name: Add contracts to "{{ epg_name }}"
+      cisco.aci.aci_epg_to_contract:
         <<: *aci_login
         tenant: "{{ tenant_name }}"
-        ap: "{{ app_name }}"
-        epg: "{{ item.0.name }}"
-        encap_id: "{{ item.1.encap }}"
-        deploy_immediacy: lazy
-        interface_mode: "{{ item.1.mode }}"
-        interface_type: "{{ item.1.type }}"
-        pod_id: "{{ item.1.pod }}"
-        leafs: "{{ item.1.leafs }}"
-        interface: "{{ item.1.interface }}"
-      loop: "{{ epgs | subelements('ports', skip_missing=True) }}"
+        ap: "{{ ap_name }}"
+        epg: "{{ epg_name }}"
+        contract: "{{ contract_name }}"
+        contract_type: provider
+
+    # Add contract to EPG-T2 and erroneously provider contract ALLOW-ALL
+    - name: Add contracts to EPG-T2
+      cisco.aci.aci_epg_to_contract:
+        <<: *aci_login
+        tenant: "{{ tenant_name }}"
+        ap: "{{ ap_name }}"
+        epg: EPG-T2
+        contract: "{{ contract_name }}"
+        contract_type: consumer
+
+    - name: Add contracts to EPG-T2
+      cisco.aci.aci_epg_to_contract:
+        <<: *aci_login
+        tenant: "{{ tenant_name }}"
+        ap: "{{ ap_name }}"
+        epg: EPG-T2
+        contract: ALLOW-ALL
+        contract_type: provider
+
+    - name: Add contracts
+      cisco.aci.aci_contract:
+        <<: *aci_login
+        tenant: "{{ tenant_name }}"
+        contract: "{{ contract_name }}"
+        scope: context
+
+    - name: Add contract subjects
+      cisco.aci.aci_contract_subject:
+        <<: *aci_login
+        tenant: "{{ tenant_name }}"
+        contract: "{{ contract_name }}"
+        subject: S1
+        reverse_filter: yes
+
+    - name: Bind filters to contract subjects
+      cisco.aci.aci_contract_subject_to_filter:
+        <<: *aci_login
+        tenant: "{{ tenant_name }}"
+        contract: "{{ contract_name }}"
+        subject: S1
+        filter: https
+
+    # Contract Filters definition
+
+    - name: Add filters
+      cisco.aci.aci_filter:
+        <<: *aci_login
+        tenant: "{{ tenant_name }}"
+        filter: https
+
+    - name: Add filter entries
+      cisco.aci.aci_filter_entry:
+        <<: *aci_login
+        tenant: "{{ tenant_name }}"
+        filter: https
+        entry: https
+        ether_type: ip
+        ip_protocol: tcp
+        dst_port: 443
