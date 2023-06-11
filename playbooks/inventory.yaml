@@ -2,8 +2,8 @@ dcmdr:
   children:
     apic:
       hosts:
-        apic.swlab.bc:
-          ansible_host: 192.168.254.30
+        apic.swlab.bcn:
+          ansible_host: apic.bcn
           aci_username: "admin"
           aci_password: "C1sc0123p"
           aci_validate_certs: no
