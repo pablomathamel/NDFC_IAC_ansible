@@ -51,7 +51,7 @@ jobs:
   ansible-dry-run:
     runs-on: self-hosted
     needs: ansible-lint
-    container: pmathame/ansible:latest
+    container: adealdag/ansible:latest
 
     steps:
       - uses: actions/checkout@v2
@@ -86,7 +86,7 @@ jobs:
   pre-change-validation:
     runs-on: self-hosted
     needs: ansible-dry-run
-    container: pmathame/ansible:latest
+    container: adealdag/ansible:latest
 
     steps:
       - uses: actions/checkout@v2
@@ -139,7 +139,7 @@ jobs:
   ansible-deploy:
     runs-on: self-hosted
     needs: snapshot
-    container: pmathame/ansible:latest
+    container: adealdag/ansible:latest
 
     steps:
       - uses: actions/checkout@v2
@@ -168,7 +168,7 @@ jobs:
   post-change-validation:
     runs-on: self-hosted
     needs: ansible-deploy
-    container: pmathame/ansible:latest
+    container: adealdag/ansible:latest
 
     steps:
       - uses: actions/checkout@v2
