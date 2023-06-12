@@ -2,6 +2,6 @@ tenant_name: TN-Production
 vrf_name: default
 ap_name: AP
 bd_name: BD-T3
-epg_name: EGP-T3
+epg_name: EPG-T3
 contract_name: T2-T3
 filter_name: flt2

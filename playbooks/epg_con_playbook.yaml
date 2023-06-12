@@ -72,7 +72,7 @@
         contract: "{{ contract_name }}"
         contract_type: provider
 
-    # Add contract to EPG-T2 and erroneously provider contract ALLOW-ALL
+    # Add contract to EPG-T2 and erroneously consume contract ALLOW-ALL
     - name: Add contracts to EPG-T2
       cisco.aci.aci_epg_to_contract:
         <<: *aci_login
@@ -80,7 +80,7 @@
         ap: "{{ ap_name }}"
         epg: EPG-T2
         contract: "{{ contract_name }}"
-        contract_type: consumer
+        contract_type: provider
 
     - name: Add contracts to EPG-T2
       cisco.aci.aci_epg_to_contract:
