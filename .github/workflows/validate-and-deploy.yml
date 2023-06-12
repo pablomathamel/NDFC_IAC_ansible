@@ -35,7 +35,7 @@ jobs:
         run: yamllint ./playbooks
 
       - name: Send Webex Notification
-        uses: pablomathamel/action-webex-notification@python-v1
+        uses: adealdag/action-webex-notification@python-v1
         if: always()
         with:
           webexToken: ${{ secrets.WEBEX_TOKEN }}
@@ -70,7 +70,7 @@ jobs:
           path: playbooks/dryrun_data.json
 
       - name: Send Webex Notification
-        uses: pablomathamel/action-webex-notification@python-v1
+        uses: adealdag/action-webex-notification@python-v1
         if: always()
         with:
           webexToken: ${{ secrets.WEBEX_TOKEN }}
@@ -105,7 +105,7 @@ jobs:
         working-directory: tools/change-validation
 
       - name: Send Webex Notification
-        uses: pablomathamel/action-webex-notification@python-v1
+        uses: adealdag/action-webex-notification@python-v1
         if: always()
         with:
           webexToken: ${{ secrets.WEBEX_TOKEN }}
@@ -152,7 +152,7 @@ jobs:
         working-directory: playbooks
 
       - name: Send Webex Notification
-        uses: pablomathamel/action-webex-notification@python-v1
+        uses: adealdag/action-webex-notification@python-v1
         if: always()
         with:
           webexToken: ${{ secrets.WEBEX_TOKEN }}
@@ -181,7 +181,7 @@ jobs:
         working-directory: tools/change-validation
 
       - name: Send Webex Notification
-        uses: pablomathamel/action-webex-notification@python-v1
+        uses: adealdag/action-webex-notification@python-v1
         if: always()
         with:
           webexToken: ${{ secrets.WEBEX_TOKEN }}
