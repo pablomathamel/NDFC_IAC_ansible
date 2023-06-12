@@ -10,5 +10,5 @@
 #- name: Deploy prod hrms app
 #  import_playbook: hrms_app_playbook.yaml
 
-#- name: Deploy new EPG and contract
-#  import_playbook: epg_con_playbook.yaml
+- name: Deploy new EPG and contract
+  import_playbook: epg_con_playbook.yaml
