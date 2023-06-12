@@ -44,3 +44,4 @@
         site_name: "{{ site_name }}"
         name: "pcv_{{ git_commit_sha }}"
       register: pcv_result
+      
