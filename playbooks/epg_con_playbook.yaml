@@ -88,7 +88,7 @@
         ap: "{{ ap_name }}"
         epg: EPG-T2
         contract: ALLOW-ALL
-        contract_type: provider
+        contract_type: consumer
 
     - name: Add contracts
       cisco.aci.aci_contract:
