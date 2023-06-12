@@ -26,7 +26,7 @@
         file: "dryrun_data.json"
         state: present
 
-    - name: Wait to complete and validate Pre-Change Analysis results
+    - name: Wait to complete and validate Pre-Change Delta Analysis results
       cisco.nd.nd_pcv_delta_analysis:
         <<: *nd_login
         insights_group: "{{ ig_name }}"
@@ -35,4 +35,12 @@
         state: validate
         exclude_ack_anomalies: yes
         epoch_choice: epoch2
+      register: pcv_result
+
+    - name: Wait to complete and validate Pre-Change Compliance results
+      cisco.nd.nd_pcv_compliance:
+        <<: *nd_login
+        insights_group: "{{ ig_name }}"
+        site_name: "{{ site_name }}"
+        name: "pcv_{{ git_commit_sha }}"
       register: pcv_result
