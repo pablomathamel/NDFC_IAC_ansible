@@ -3,8 +3,8 @@ dcmdr:
     nd:
       hosts:
         nd.swlab.bcn:
-          #ansible_host: 192.168.254.33
-          ansible_host: swlab.bcn:8083
+          ansible_host: 192.168.254.33
+          #ansible_host: swlab.bcn:8083
           ansible_user: admin
           ansible_ssh_pass: C1sc0123p
       vars:
