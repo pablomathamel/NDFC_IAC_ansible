@@ -42,8 +42,8 @@
         <<: *aci_login
         tenant: "{{ tenant_name }}"
         bd: "{{ bd_name }}"
-        gateway: 172.16.2.1
-        mask: 24
+        gateway: "{{ subnet }}"
+        mask: "{{ mask }}"
         scope: private
 
     - name: Add EPG "{{ epg_name }}"
@@ -81,6 +81,7 @@
         epg: EPG-T2
         contract: "{{ contract_name }}"
         contract_type: consumer
+  
     - name: Add contracts to EPG-T2
       cisco.aci.aci_epg_to_contract:
         <<: *aci_login
@@ -88,7 +89,7 @@
         ap: "{{ ap_name }}"
         epg: EPG-T2
         contract: ALLOW-ALL
-        contract_type: consumer
+        contract_type: provider
 
     - name: Add contracts
       cisco.aci.aci_contract:
