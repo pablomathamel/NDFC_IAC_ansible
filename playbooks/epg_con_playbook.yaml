@@ -42,7 +42,7 @@
         <<: *aci_login
         tenant: "{{ tenant_name }}"
         bd: "{{ bd_name }}"
-        gateway: 172.16.3.1
+        gateway: 172.16.2.1
         mask: 24
         scope: private
 
