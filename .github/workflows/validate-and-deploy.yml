@@ -62,3 +62,32 @@ jobs:
             * Git SHA: ${{ github.sha }}
             * Status: ${{ job.status }}
             * Details URL: [Job Results](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+
+# Run post-change validation on Nexus Dashboard Insights
+  post-change-validation:
+    runs-on: self-hosted
+    needs: ansible-deploy
+    container: pmathame/ansible:latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run post-change analysis playbook
+        run: |
+          ansible --version
+          rm -rf $HOME/.ansible/pc
+          ansible-playbook -i inventory.yaml post-change-validation.yaml
+        working-directory: tools/change-validation
+
+      - name: Send Webex Notification
+        uses: adealdag/action-webex-notification@python-v1
+        if: always()
+        with:
+          webexToken: ${{ secrets.WEBEX_TOKEN }}
+          roomID: ${{ secrets.ROOM_ID }}
+          markdownMsg: |
+            ### [${{ github.job }}] ${{ github.repository }} - ${{ github.event.head_commit.message }}
+            * Trigger: ${{ github.event_name }}
+            * Git SHA: ${{ github.sha }}
+            * Status: ${{ job.status }}
+            * Details URL: [Nexus Dashboard Insights](${{ secrets.ND_HOST }}/appcenter/cisco/nexus-insights/ui/#/troubleshoot/deltaAnalysis)
