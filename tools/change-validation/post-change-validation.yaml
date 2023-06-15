@@ -14,7 +14,7 @@
       use_proxy: "{{ ansible_httpapi_use_proxy }}"
     ig_name: ACI-BCN
     site_name: ACI-BCN
-    git_commit_sha: "{{ lookup('ansible.builtin.env', 'GITHUB_SHA') }}"
+    git_commit_sha_prod: "{{ lookup('ansible.builtin.env', 'GITHUB_SHA') }}"
 
   tasks:
     - name: Query Pre-Change Analysis performed before
@@ -51,7 +51,7 @@
         <<: *nd_login
         insights_group: "{{ ig_name }}"
         site_name: "{{ site_name }}"
-        name: "delta_{{ git_commit_sha }}"
+        name: "delta_{{ git_commit_sha_prod }}"
         earlier_epoch_id: "{{ pre_change_validation_info.current.baseEpochId }}"
         later_epoch_id: "{{ instant_analysis_info.current.epochInfo.epochId }}"
         state: present
@@ -62,7 +62,7 @@
         <<: *nd_login
         insights_group: "{{ ig_name }}"
         site_name: "{{ site_name }}"
-        name: "delta_{{ git_commit_sha }}"
+        name: "delta_{{ git_commit_sha_prod }}"
         state: validate
       register: delta_analysis_results
 
