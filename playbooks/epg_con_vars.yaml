@@ -7,6 +7,6 @@ ap_name: AP
 bd_name: BD-T3
 subnet: 172.16.3.1
 mask: 24
-epg_name: EGP-T3
+epg_name: EPG-T3
 contract_name: T2-T3
-filter_name: flt
+filter_name: flt2
