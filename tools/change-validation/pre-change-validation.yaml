@@ -14,7 +14,7 @@
       use_proxy: "{{ ansible_httpapi_use_proxy }}"
     ig_name: ACI-BCN
     site_name: ACI-BCN
-    git_commit_sha_pre: "{{ lookup('ansible.builtin.env', 'GITHUB_SHA') }}"
+    git_workflow_name: "{{ lookup('ansible.builtin.env', 'GITHUB_WORKFLOW') }}"
     
 
   tasks:
@@ -23,7 +23,7 @@
         <<: *nd_login
         ig_name: "{{ ig_name }}"
         site_name: "{{ site_name }}"
-        name: "pcv_{{ vars.git_commit_sha_pre }}"
+        name: "pcv_{{ git_workflow_name }}"
         file: "dryrun_data.json"
         state: present
 
@@ -32,7 +32,7 @@
         <<: *nd_login
         insights_group: "{{ ig_name }}"
         site_name: "{{ site_name }}"
-        name: "pcv_{{ vars.git_commit_sha_pre }}"
+        name: "pcv_{{ git_workflow_name }}"
         state: validate
         exclude_ack_anomalies: yes
         epoch_choice: epoch2
@@ -43,6 +43,6 @@
         <<: *nd_login
         insights_group: "{{ ig_name }}"
         site_name: "{{ site_name }}"
-        name: "pcv_{{ vars.git_commit_sha_pre }}"
+        name: "pcv_{{ git_workflow_name }}"
       register: pcv_result
       
