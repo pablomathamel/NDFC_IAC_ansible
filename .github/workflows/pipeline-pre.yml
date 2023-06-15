@@ -13,17 +13,22 @@ on:
 # Environment variables
 env:
   PYTHONWARNINGS: "ignore:Unverified HTTPS request"
-  vars.GIT_COMMIT_SHA_PRE: ${{ github.sha }}
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-  # Run ansible lint on the complete directory
+# Run ansible lint on the complete directory
   ansible-lint:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: set_variables
+        run: |
+          echo "printing variable sha"
+          echo {{ vars.GIT_COMMIT_SHA_PRE }}
 
       - name: Set up Python
         uses: actions/setup-python@v2
