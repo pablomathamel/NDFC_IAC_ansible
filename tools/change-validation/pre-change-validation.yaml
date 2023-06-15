@@ -14,7 +14,7 @@
       use_proxy: "{{ ansible_httpapi_use_proxy }}"
     ig_name: ACI-BCN
     site_name: ACI-BCN
-    git_commit_sha: "{{ lookup('ansible.builtin.env', 'GITHUB_SHA') }}"
+    git_commit_sha_pre: "{{ lookup('ansible.builtin.env', 'GITHUB_SHA') }}"
 
   tasks:
     - name: Create a new Pre-Change Analysis from file
@@ -22,7 +22,7 @@
         <<: *nd_login
         ig_name: "{{ ig_name }}"
         site_name: "{{ site_name }}"
-        name: "pcv_{{ git_commit_sha }}"
+        name: "pcv_{{ git_commit_sha_pre }}"
         file: "dryrun_data.json"
         state: present
 
@@ -31,7 +31,7 @@
         <<: *nd_login
         insights_group: "{{ ig_name }}"
         site_name: "{{ site_name }}"
-        name: "pcv_{{ git_commit_sha }}"
+        name: "pcv_{{ git_commit_sha_pre }}"
         state: validate
         exclude_ack_anomalies: yes
         epoch_choice: epoch2
@@ -42,6 +42,6 @@
         <<: *nd_login
         insights_group: "{{ ig_name }}"
         site_name: "{{ site_name }}"
-        name: "pcv_{{ git_commit_sha }}"
+        name: "pcv_{{ git_commit_sha_pre }}"
       register: pcv_result
       
