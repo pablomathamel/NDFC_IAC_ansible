@@ -14,7 +14,7 @@
       use_proxy: "{{ ansible_httpapi_use_proxy }}"
     ig_name: ACI-BCN
     site_name: ACI-BCN
-    vars.GIT_COMMIT_SHA_PRE: "{{ lookup('ansible.builtin.env', 'GITHUB_SHA') }}"
+    GIT_COMMIT_SHA_PRE: "{{ lookup('ansible.builtin.env', 'GITHUB_SHA') }}"
 
   tasks:
     - name: Create a new Pre-Change Analysis from file
