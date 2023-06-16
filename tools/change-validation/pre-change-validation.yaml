@@ -19,7 +19,10 @@
 
   tasks:
     - name: Print variable just in case
-       msg: pcv_"{{ git_commit_sha }}"
+      ansible.builtin.debug:
+       msg: "pcv_{{ git_commit_sha }}"
+       verbosity: 2
+
     - name: Create a new Pre-Change Analysis from file
       cisco.nd.nd_pcv:
         <<: *nd_login
