@@ -18,6 +18,8 @@
     
 
   tasks:
+    - name: Print variable just in case
+       msg: "pcv_{{ git_commit_sha }}"
     - name: Create a new Pre-Change Analysis from file
       cisco.nd.nd_pcv:
         <<: *nd_login
