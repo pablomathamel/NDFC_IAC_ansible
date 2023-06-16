@@ -28,7 +28,7 @@ jobs:
       - name: set_variables
         run: |
           echo "printing variable sha"
-          echo {{ vars.GIT_COMMIT_SHA_PRE }}
+          commit_message=$(git log -1 --pretty=%B)
 
       - name: Set up Python
         uses: actions/setup-python@v2
