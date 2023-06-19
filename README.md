@@ -19,17 +19,18 @@ In the preproduction branch (when a push is detected)
 
   This job runs the Ansible playbook `deploy.yaml` using [check mode](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_checkmode.html#using-check-mode). When playbooks are running in check mode, they do not make changes in the infrastructure, instead Ansible just simulates the changes. When using check mode together with Cisco ACI Ansible collection, the body of POST requests is saved in an output file that can be specified in each of the tasks (or in all of them at one using an anchor).
   
-  This job runs in a self-hosted runner, and uses the container [adealdag/ansible](https://hub.docker.com/repository/docker/adealdag/ansible/general), which has ansible and the required collections pre-installed.
+  This job runs in a self-hosted runner, and uses the container [pablomathamel/ansible](https://hub.docker.com/r/pablomathamel/ansible), which has ansible and the required collections pre-installed.
   
 * Pre-Change Validation
 
   This job runs a Pre-change Analysis in Nexus Dashboard Insights, waits until it is completed and evaluates the result. This pre-change analysis is triggered using Nexus Dashboard Collection (cisco.nd)
   
-  This job runs in a self-hosted runner, and uses the container [adealdag/ansible](https://hub.docker.com/r/adealdag/ansible), which has ansible and the required collections pre-installed.
+  This job runs in a self-hosted runner, and uses the container [pablomathamel/ansible](https://hub.docker.com/r/pablomathamel/ansible), which has ansible and the required collections pre-installed.
   
 In the production branch (when a push is detected, after a pull request from preproduction branch)
 ===================================================================================================
-# The next two steps are repeated from the previous preproduction push because time between preproduction test, and final incoporation to production might be enough to introduce other changes to the network that may actually trigger an anomaly. Additionally, since multiple teams may be committing code, the complete consolidated code is checked validated (using NDI PCV) in this step.
+
+The next two steps are repeated from the previous preproduction push because time between preproduction test, and final incoporation to production might be enough to introduce other changes to the network that may actually trigger an anomaly. Additionally, since multiple teams may be committing code, the complete consolidated code is checked validated (using NDI PCV) in this step.
 
 * Ansible dry-run
 
@@ -45,13 +46,13 @@ In the production branch (when a push is detected, after a pull request from pre
 
   This job executes the ansible playbook and deploy the configuration changes in the infrastructure.
   
-  This job runs in a self-hosted runner, and uses the container [adealdag/ansible](https://hub.docker.com/r/adealdag/ansible), which has ansible and the required collections pre-installed.
+  This job runs in a self-hosted runner, and uses the container [pablomathamel/ansible](https://hub.docker.com/r/pablomathamel/ansible), which has ansible and the required collections pre-installed.
   
 * Post-Change Validation
 
   This job runs a Delta Analysis in Nexus Dashboard Insights, waits until it is completed and evaluates the result. This delta analysis is triggered using Nexus Dashboard Collection (cisco.nd)
   
-  This job runs in a self-hosted runner, and uses the container [adealdag/ansible](https://hub.docker.com/r/adealdag/ansible), which has ansible and the required collections pre-installed.
+  This job runs in a self-hosted runner, and uses the container [pablomathamel/ansible](https://hub.docker.com/r/pablomathamel/ansible), which has ansible and the required collections pre-installed.
   
 
 ### Ansible Playbooks
