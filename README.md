@@ -1,11 +1,15 @@
 # CI/CD Pipeline for Cisco ACI with pre-change and post-change validations using Nexus Dashboard Insights
-This repository contains the pipeline example used in DEVNET-2473 session in Cisco Live Amsterdam 2023
+This repository is based on the work made by Alejandro de Alda, presented on the DEVNET-2473 session in Cisco Live Amsterdam 2023
 
 ## Content description
 
 ### GitHub Actions workflow
 
 This example contains a GitHub Actions workflow (or pipeline) that executes in sequential order the following steps:
+
+
+In the preproduction branch (when a push is detected)
+======================================================
 
 * Ansible Linting and Syntax validation
 
@@ -23,6 +27,14 @@ This example contains a GitHub Actions workflow (or pipeline) that executes in s
   
   This job runs in a self-hosted runner, and uses the container [adealdag/ansible](https://hub.docker.com/r/adealdag/ansible), which has ansible and the required collections pre-installed.
   
+In the production branch (when a push is detected, after a pull request from preproduction branch)
+===================================================================================================
+# The next two steps are repeated from the previous preproduction push because time between preproduction test, and final incoporation to production might be enough to introduce other changes to the network that may actually trigger an anomaly. Additionally, since multiple teams may be committing code, the complete consolidated code is checked validated (using NDI PCV) in this step.
+
+* Ansible dry-run
+
+* Pre-Change Validation
+
 * Snapshot
 
   This job runs a snapshot in the Cisco ACI fabric, using a python script that uses Cobra SDK. 
@@ -41,9 +53,10 @@ This example contains a GitHub Actions workflow (or pipeline) that executes in s
   
   This job runs in a self-hosted runner, and uses the container [adealdag/ansible](https://hub.docker.com/r/adealdag/ansible), which has ansible and the required collections pre-installed.
   
+
 ### Ansible Playbooks
   
-This example contains a set of ansible playbook to deploy a tenant called "pcv_prod_tn" and a few objects within that tenant, like bridge domains, app profiles, epgs, contracts, and more. 
+This example contains a set of ansible playbook to deploy a new EPG in a pre-existing tenant called TN-Production. Intentional errors or mistakes can be introduced in the playbook, to trigger different anomalies in NDI.  
 
 All objects to be created are defined in the variable files in a very declarative model.
 
@@ -78,7 +91,6 @@ A few secrets are required for the pipeline to be correctly executed. These are 
 * APIC_PASSWORD
 * ND_HOST
 * ROOM_ID
-* VAULT_KEY
 * WEBEX_TOKEN
 
 ### Creating a Webex Bot
