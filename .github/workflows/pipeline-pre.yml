@@ -5,7 +5,7 @@ name: pipeline-pre
 on:
   # Triggers the workflow on push (and merge) events on the preprod branch
   push:
-    branches: [preproduction]
+    branches: [preproduction_2]
 
   # Allows you to run this workflow manually from the Actions tab
   # workflow_dispatch:
@@ -14,14 +14,21 @@ on:
 env:
   PYTHONWARNINGS: "ignore:Unverified HTTPS request"
 
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # Run ansible lint on the complete directory
+
+# Run ansible lint on the complete directory
   ansible-lint:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: set_variables
+        run: |
+          echo "printing variable sha"
+          commit_message=$(git log -1 --pretty=%B)
 
       - name: Set up Python
         uses: actions/setup-python@v2

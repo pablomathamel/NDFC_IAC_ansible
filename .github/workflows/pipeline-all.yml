@@ -1,11 +1,11 @@
 # Networking CICD Pipeline with pre-change and post-change validation powered by Nexus Dashboard
-name: pipeline-prod
+name: pipeline-validate-and-deploy
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push (and merge) events on the master branch
   push:
-    branches: [production_2]
+    branches: [production]
 
   # Allows you to run this workflow manually from the Actions tab
   # workflow_dispatch:
@@ -16,16 +16,49 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # Run ansible lint on the complete directory
+  ansible-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install yamllint
+        run: pip install yamllint
+
+      - name: Lint YAML files
+        run: yamllint ./playbooks
+
+      - name: Send Webex Notification
+        uses: adealdag/action-webex-notification@python-v1
+        if: always()
+        with:
+          webexToken: ${{ secrets.WEBEX_TOKEN }}
+          roomID: ${{ secrets.ROOM_ID }}
+          markdownMsg: |
+            ### [${{ github.job }}] ${{ github.repository }} - ${{ github.event.head_commit.message }}
+            * Trigger: ${{ github.event_name }}
+            * Git SHA: ${{ github.sha }}
+            * Status: ${{ job.status }}
+            * Details URL: [Job Results](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
   # Run ansible dry-run using check mode. Result is uploaded as artifact
   ansible-dry-run:
     runs-on: self-hosted
+    needs: ansible-lint
     container: pmathame/ansible:latest
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Run ansible playbook dry-run
+        env:
+          VAULT_KEY: ${{ secrets.VAULT_KEY }}
         run: |
           ansible --version
           ansible-playbook -i inventory.yaml deploy.yaml --check
@@ -67,6 +100,8 @@ jobs:
           path: tools/change-validation
 
       - name: Run pre-change analysis playbook
+        env:
+          VAULT_KEY: ${{ secrets.VAULT_KEY }}
         run: |
           ansible --version
           rm -rf $HOME/.ansible/pc
@@ -86,9 +121,10 @@ jobs:
             * Status: ${{ job.status }}
             * Details URL: [Nexus Dashboard Insights](${{ secrets.ND_HOST }}/appcenter/cisco/nexus-insights/ui/#/changeManagement/preChangeAnalysis)
 
-# Take a snapshot of the ACI fabric
+  # Take a snapshot of the ACI fabric
   snapshot:
     runs-on: self-hosted
+    needs: pre-change-validation
     container: adealdag/aci_cobra:5.2.4e
 
     steps:
@@ -113,9 +149,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run ansible playbook
+        env:
+          VAULT_KEY: ${{ secrets.VAULT_KEY }}
         run: |
           ansible --version
-          echo $VAULT_KEY > vault.key
           ansible-playbook -i inventory.yaml deploy.yaml
         working-directory: playbooks
 
@@ -142,6 +179,8 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run post-change analysis playbook
+        env:
+          VAULT_KEY: ${{ secrets.VAULT_KEY }}
         run: |
           ansible --version
           rm -rf $HOME/.ansible/pc

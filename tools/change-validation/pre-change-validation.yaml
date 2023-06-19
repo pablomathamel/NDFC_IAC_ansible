@@ -15,8 +15,14 @@
     ig_name: ACI-BCN
     site_name: ACI-BCN
     git_commit_sha: "{{ lookup('ansible.builtin.env', 'GITHUB_SHA') }}"
+    
 
   tasks:
+    - name: Print variable just in case
+      ansible.builtin.debug:
+       msg: "pcv_{{ git_commit_sha }}"
+       verbosity: 2
+
     - name: Create a new Pre-Change Analysis from file
       cisco.nd.nd_pcv:
         <<: *nd_login
