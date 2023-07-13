@@ -1,5 +1,5 @@
 # CI/CD Pipeline for Cisco ACI with pre-change and post-change validations using Nexus Dashboard Insights
-This repository is based on the work made by Alejandro de Alda, presented on the DEVNET-2473 session in Cisco Live Amsterdam 2023
+This repository is based on the work made by Alejandro de Alda, presented on the DEVNET-2473 session in Cisco Live US 2023
 
 ## Content description
 
