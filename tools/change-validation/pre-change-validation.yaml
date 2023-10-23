@@ -12,7 +12,7 @@
       password: "{{ ansible_ssh_pass }}"
       validate_certs: "{{ ansible_httpapi_validate_certs }}"
       use_proxy: "{{ ansible_httpapi_use_proxy }}"
-    #ig_name: ACI-BCN
+    ig_name: 
     site_name: ACI-BCN
     git_commit_sha: "{{ lookup('ansible.builtin.env', 'GITHUB_SHA') }}"
     
@@ -26,7 +26,7 @@
     - name: Create a new Pre-Change Analysis from file
       cisco.nd.nd_pcv:
         <<: *nd_login
-        #ig_name: "{{ ig_name }}"
+        ig_name: "{{ ig_name }}"
         site_name: "{{ site_name }}"
         name: "pcv_{{ git_commit_sha }}"
         file: "dryrun_data.json"
@@ -35,7 +35,7 @@
     - name: Wait to complete and validate Pre-Change Delta Analysis results
       cisco.nd.nd_pcv_delta_analysis:
         <<: *nd_login
-        #insights_group: "{{ ig_name }}"
+        insights_group: "{{ ig_name }}"
         site_name: "{{ site_name }}"
         name: "pcv_{{ git_commit_sha }}"
         state: validate
@@ -46,7 +46,7 @@
     - name: Wait to complete and validate Pre-Change Compliance results
       cisco.nd.nd_pcv_compliance:
         <<: *nd_login
-        #insights_group: "{{ ig_name }}"
+        insights_group: "{{ ig_name }}"
         site_name: "{{ site_name }}"
         name: "pcv_{{ git_commit_sha }}"
       register: pcv_result
