@@ -12,7 +12,7 @@
       password: "{{ ansible_ssh_pass }}"
       validate_certs: "{{ ansible_httpapi_validate_certs }}"
       use_proxy: "{{ ansible_httpapi_use_proxy }}"
-    ig_name: ACI-BCN
+    ig_name: default
     site_name: ACI-BCN
     git_commit_sha: "{{ lookup('ansible.builtin.env', 'GITHUB_SHA') }}"
 
