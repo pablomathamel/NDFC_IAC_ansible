@@ -8,7 +8,7 @@ nd_auth_domain="local"
 nd_user=""
 nd_pwd=""
 fabric_name=""
-#
+###
 
 def get_token():  
    url = nd_cluster+"/login"
