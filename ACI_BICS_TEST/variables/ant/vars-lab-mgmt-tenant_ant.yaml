@@ -1,0 +1,70 @@
+tenants:
+  - name: "BICS_test"
+VRFs:
+  - name: "inb"
+    tenant: "BICS_test"
+BDs:
+  - name: "ant_vl_1113_bd"
+    vrf: "inb"
+    multi_dest_flood: "bd-flood"
+    arp_flood: "yes"
+    unicast_route: "yes"
+    ip_learning: "yes"
+    tenant: "BICS_test"
+  - name: "ant_vl_1112_bd"
+    vrf: "inb"
+    multi_dest_flood: "bd-flood"
+    arp_flood: "yes"
+    unicast_route: "yes"
+    ip_learning: "yes"
+    tenant: "BICS_test"
+ANPs:
+  - name: "ant_ndi_ap"
+    tenant: "BICS_test"
+EPGs:
+  - name: "ant_ndi_epg"
+    anp: "ant_ndi_ap"
+    bd: "ant_vl_1113_bd"
+static_bindings:
+  - identifyer: "ant_ndi_epg_2494"
+    epg: "ant_ndi_epg"
+    vlan: 1113
+    pod: 1
+    mode: "untagged"
+    node: 1701
+    port: 5
+  - identifyer: "ant_ndi_epg_2686"
+    epg: "ant_ndi_epg"
+    vlan: 1113
+    pod: 1
+    mode: "untagged"
+    node: 1701
+    port: 6
+  - identifyer: "ant_ndi_epg_6531"
+    epg: "ant_ndi_epg"
+    vlan: 1113
+    pod: 1
+    mode: "untagged"
+    node: 1701
+    port: 7
+  - identifyer: "ant_ndi_epg_8946"
+    epg: "ant_ndi_epg"
+    vlan: 1113
+    pod: 1
+    mode: "untagged"
+    node: 1702
+    port: 5
+  - identifyer: "ant_ndi_epg_8754"
+    epg: "ant_ndi_epg"
+    vlan: 1113
+    pod: 1
+    mode: "untagged"
+    node: 1702
+    port: 6
+  - identifyer: "ant_ndi_epg_0333"
+    epg: "ant_ndi_epg"
+    vlan: 1113
+    pod: 1
+    mode: "untagged"
+    node: 1702
+    port: 7

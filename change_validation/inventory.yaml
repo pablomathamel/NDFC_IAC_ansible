@@ -1,0 +1,15 @@
+dcmdr:
+  children:
+    nd:
+      hosts:
+        nd.swlab.bcn:
+          #ansible_host: 192.168.254.33
+          ansible_host: swlab.bcn
+          ansible_user: admin
+          ansible_ssh_pass: C1sc0123p
+      vars:
+        ansible_connection: ansible.netcommon.httpapi
+        ansible_network_os: cisco.nd.nd
+        ansible_httpapi_validate_certs: false
+        ansible_httpapi_use_ssl: true
+        ansible_httpapi_use_proxy: false

@@ -1,0 +1,143 @@
+{
+  "version": 4,
+  "terraform_version": "1.4.6",
+  "serial": 20,
+  "lineage": "0b1337b1-cf04-da2d-32d6-37c24d2b1bd7",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "dcnm_network",
+      "name": "NET1-VRF1",
+      "provider": "provider[\"registry.terraform.io/ciscodevnet/dcnm\"]",
+      "instances": [
+        {
+          "status": "tainted",
+          "schema_version": 0,
+          "attributes": {
+            "arp_supp_flag": false,
+            "attachments": [
+              {
+                "attach": true,
+                "dot1_qvlan": 0,
+                "extension_values": "",
+                "free_form_config": "",
+                "instance_values": "",
+                "serial_number": "99RHB5FSQSS",
+                "switch_ports": [
+                  "Port-channel1000"
+                ],
+                "untagged": false,
+                "vlan_id": 0
+              },
+              {
+                "attach": true,
+                "dot1_qvlan": 0,
+                "extension_values": "",
+                "free_form_config": "",
+                "instance_values": "",
+                "serial_number": "9Q6LEFTSEDU",
+                "switch_ports": [
+                  "Port-channel1000"
+                ],
+                "untagged": false,
+                "vlan_id": 0
+              }
+            ],
+            "deploy": false,
+            "deploy_timeout": 300,
+            "description": "",
+            "dhcp_1": null,
+            "dhcp_2": "",
+            "dhcp_3": "",
+            "dhcp_vrf": "",
+            "dhcp_vrf_2": null,
+            "dhcp_vrf_3": null,
+            "display_name": "NET1-VRF1",
+            "extension_template": "Default_Network_Extension_Universal",
+            "fabric_name": "S1-VXLAN-EVPN",
+            "id": "NET1-VRF1",
+            "ipv4_gateway": "192.168.1.1/24",
+            "ipv6_gateway": "",
+            "ir_enable_flag": false,
+            "l2_only_flag": false,
+            "l3_gateway_flag": false,
+            "loopback_id": null,
+            "mcast_group": "239.1.1.1",
+            "mtu": 9216,
+            "name": "NET1-VRF1",
+            "netflow_flag": false,
+            "network_id": "30001",
+            "nve_id": 1,
+            "rt_both_flag": false,
+            "secondary_gw_1": "",
+            "secondary_gw_2": "",
+            "secondary_gw_3": "",
+            "secondary_gw_4": "",
+            "service_template": null,
+            "source": null,
+            "svi_netflow_monitor": "",
+            "tag": "12345",
+            "template": "Default_Network_Universal",
+            "trm_enable_flag": false,
+            "vlan_id": 2301,
+            "vlan_name": "NET1-VRF1",
+            "vlan_netflow_monitor": "",
+            "vrf_name": "VRF-1"
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA==",
+          "dependencies": [
+            "dcnm_vrf.VRF-1"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "dcnm_vrf",
+      "name": "VRF-1",
+      "provider": "provider[\"registry.terraform.io/ciscodevnet/dcnm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "advertise_default_route": "true",
+            "advertise_host_route": "false",
+            "attachments": [],
+            "deploy": false,
+            "deploy_timeout": 300,
+            "description": "VRF-1",
+            "extension_template": "Default_VRF_Extension_Universal",
+            "fabric_name": "S1-VXLAN-EVPN",
+            "id": "VRF-1",
+            "intf_description": "VRF-1",
+            "ipv6_link_local_flag": "true",
+            "loopback_id": null,
+            "max_bgp_path": 1,
+            "max_ibgp_path": 2,
+            "mtu": 9216,
+            "mutlicast_address": null,
+            "mutlicast_group": "",
+            "name": "VRF-1",
+            "rp_address": null,
+            "rp_external_flag": "false",
+            "segment_id": "50001",
+            "service_template": null,
+            "source": null,
+            "static_default_route": "true",
+            "tag": "12345",
+            "template": "Default_VRF_Universal",
+            "trm_bgw_msite_flag": "false",
+            "trm_enable": "false",
+            "vlan_id": 2001,
+            "vlan_name": "VRF-1"
+          },
+          "sensitive_attributes": [],
+          "private": "bnVsbA=="
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}

@@ -1,0 +1,26 @@
+# Pre-change validation - Creates a pre-change validation using a JSON file, waits for the result and evaluates it 
+---
+
+- name: Run Pre-change validation
+  hosts: nd
+  gather_facts: no
+
+  vars:
+    nd_login: &nd_login
+      host: swlab.bcn
+      port: 8083
+      username: "{{ ansible_user }}"
+      password: "{{ ansible_ssh_pass }}"
+      validate_certs: "{{ ansible_httpapi_validate_certs }}"
+      use_proxy: "{{ ansible_httpapi_use_proxy }}"
+    ig_name: ACI-BCN
+    site_name: ACI-BCN
+
+  tasks:
+    - name: Wait to complete and validate Pre-Change Compliance results
+      cisco.nd.nd_pcv_compliance:
+        <<: *nd_login
+        insights_group: ACI-BCN
+        site_name: ACI-BCN
+        name: test2
+      register: query_results
